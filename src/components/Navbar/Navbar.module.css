@@ -1,0 +1,149 @@
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.85rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-elevated);
+  backdrop-filter: blur(18px);
+}
+
+.left,
+.right {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.center {
+  min-width: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.iconButton,
+.themeButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  border-radius: 999px;
+  background: var(--surface-soft);
+  transition:
+    background-color 160ms ease,
+    transform 160ms ease;
+}
+
+.iconButton {
+  width: 44px;
+  flex-direction: column;
+  gap: 0.22rem;
+  flex-shrink: 0;
+}
+
+.iconButton:hover,
+.themeButton:hover {
+  background: var(--surface-strong);
+  transform: translateY(-1px);
+}
+
+.hamburger {
+  width: 18px;
+  height: 2px;
+  border-radius: 999px;
+  background: currentColor;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  min-width: 0;
+}
+
+.logoMark {
+  display: inline-grid;
+  place-items: center;
+  width: 2.4rem;
+  height: 1.7rem;
+  border-radius: 0.8rem;
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  color: #fff;
+  font-size: 0.95rem;
+  box-shadow: 0 10px 24px rgba(255, 0, 0, 0.22);
+}
+
+.brandText {
+  display: flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  white-space: nowrap;
+}
+
+.brandText strong {
+  font-size: 1.08rem;
+  letter-spacing: -0.02em;
+}
+
+.brandText span {
+  color: var(--text-muted);
+  font-size: 0.92rem;
+}
+
+.themeButton {
+  gap: 0.5rem;
+  padding: 0 1rem;
+}
+
+.themeIcon {
+  font-size: 1rem;
+}
+
+.themeLabel {
+  font-weight: 600;
+}
+
+@media (max-width: 860px) {
+  .navbar {
+    grid-template-columns: auto 1fr auto;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .brandText span {
+    display: none;
+  }
+
+  .themeLabel {
+    display: none;
+  }
+
+  .themeButton {
+    width: 44px;
+    padding: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .navbar {
+    grid-template-columns: 1fr;
+  }
+
+  .left,
+  .center,
+  .right {
+    width: 100%;
+  }
+
+  .left {
+    justify-content: space-between;
+  }
+
+  .right {
+    display: none;
+  }
+}
