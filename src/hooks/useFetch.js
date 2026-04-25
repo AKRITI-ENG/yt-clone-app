@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import axios from "axios";
 
-const API_BASE_URL = "http://localhost:3001";
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL?.trim() || "http://localhost:3001";
 
 export function useFetch(endpoint, options = {}) {
   const { initialData = null, enabled = true } = options;
@@ -37,7 +38,17 @@ export function useFetch(endpoint, options = {}) {
         }
       } catch (err) {
         if (isMounted) {
-          setError(err?.message || "Something went wrong while fetching data.");
+          const status = err?.response?.status;
+
+          if (!err?.response) {
+            setError(
+              "Unable to reach the mock API. Start it with `npm run server` or run both apps together with `npm run dev:all`."
+            );
+          } else if (status === 404) {
+            setError("Requested data was not found in the mock API.");
+          } else {
+            setError(err?.message || "Something went wrong while fetching data.");
+          }
         }
       } finally {
         if (isMounted) {
