@@ -1,6 +1,6 @@
 .form {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr) auto auto;
   align-items: center;
   width: min(100%, 680px);
   min-width: 0;
@@ -28,6 +28,17 @@
   background: var(--surface-soft);
   font-weight: 700;
   transition: background-color 160ms ease;
+}
+
+.clearButton {
+  height: 48px;
+  padding: 0 1rem;
+  color: var(--text-muted);
+  font-weight: 700;
+}
+
+.clearButton:hover {
+  color: var(--text);
 }
 
 .button:hover {
@@ -60,5 +71,9 @@
 
   .button {
     min-width: 88px;
+  }
+
+  .clearButton {
+    padding: 0 0.75rem;
   }
 }

@@ -4,7 +4,7 @@
   align-self: start;
   height: calc(100vh - 77px);
   border-right: 1px solid var(--border);
-  background: rgba(0, 0, 0, 0.02);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent);
   transition:
     width 180ms ease,
     transform 180ms ease,
@@ -92,6 +92,7 @@
   background: var(--bg-elevated);
   color: var(--text-muted);
   font-size: 0.92rem;
+  box-shadow: var(--shadow-soft);
 }
 
 .collapsed .section,

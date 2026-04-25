@@ -1,10 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import SearchBar from "../SearchBar";
 import styles from "./Navbar.module.css";
 import { useTheme } from "../../context/ThemeContext";
 import { useApp } from "../../context/AppContext";
 
 function Navbar() {
+  const location = useLocation();
   const themeContext = useTheme();
   const appContext = useApp();
 
@@ -36,7 +37,7 @@ function Navbar() {
       </div>
 
       <div className={styles.center}>
-        <SearchBar />
+        <SearchBar key={`${location.pathname}:${location.search}`} />
       </div>
 
       <div className={styles.right}>

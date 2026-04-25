@@ -40,9 +40,9 @@ function Sidebar() {
         </nav>
 
         <div className={styles.section}>
-          <p className={styles.sectionLabel}>Workspace</p>
+          <p className={styles.sectionLabel}>Quick Notes</p>
           <div className={styles.noteCard}>
-            Core navigation is ready. Teammates can attach real pages later without changing the sidebar API.
+            Likes and history are stored locally so the library pages keep useful state between visits.
           </div>
         </div>
       </div>

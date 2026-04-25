@@ -12,12 +12,6 @@ function SearchBar() {
   const debouncedValue = useDebounce(value, 500);
 
   useEffect(() => {
-    if (location.pathname === "/search") {
-      setValue(currentQuery);
-    }
-  }, [currentQuery, location.pathname]);
-
-  useEffect(() => {
     const nextQuery = debouncedValue.trim();
     if (!nextQuery) {
       return;
@@ -36,10 +30,18 @@ function SearchBar() {
 
     const nextQuery = value.trim();
     if (!nextQuery) {
+      navigate("/search");
       return;
     }
 
     navigate(`/search?q=${encodeURIComponent(nextQuery)}`);
+  };
+
+  const clearSearch = () => {
+    setValue("");
+    if (location.pathname === "/search") {
+      navigate("/search");
+    }
   };
 
   return (
@@ -56,6 +58,16 @@ function SearchBar() {
         placeholder="Search videos"
         autoComplete="off"
       />
+      {value ? (
+        <button
+          type="button"
+          className={styles.clearButton}
+          onClick={clearSearch}
+          aria-label="Clear search"
+        >
+          Clear
+        </button>
+      ) : null}
       <button type="submit" className={styles.button} aria-label="Search">
         Search
       </button>
