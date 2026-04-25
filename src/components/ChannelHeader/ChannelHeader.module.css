@@ -8,6 +8,7 @@
   border-radius: 28px;
   border: 1px solid var(--border);
   background: var(--surface-soft);
+  box-shadow: var(--shadow-soft);
 }
 
 .banner {
@@ -21,6 +22,7 @@
   grid-template-columns: auto minmax(0, 1fr);
   gap: 1rem;
   align-items: center;
+  padding: 0.35rem 0.25rem 0;
 }
 
 .avatar {

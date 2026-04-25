@@ -22,10 +22,29 @@ function Home() {
 
   return (
     <section className="content-stack">
-      <header className="section-intro">
-        <span className="section-kicker">Home Feed</span>
-        <h1>Discover videos from the mock backend</h1>
-        <p>Browse the full local catalog and filter it by category.</p>
+      <header className="page-hero">
+        <div className="hero-top">
+          <div className="hero-copy">
+            <span className="section-kicker">Home Feed</span>
+            <h1>Discover the local video catalog with a cleaner, more complete UI</h1>
+            <p>Browse every mock video, filter by category, and move between routes without losing the core viewing flow.</p>
+          </div>
+        </div>
+
+        <div className="hero-stats">
+          <div className="hero-stat">
+            <strong>{videos.length}</strong>
+            <span>Videos in the mock library</span>
+          </div>
+          <div className="hero-stat">
+            <strong>{categories.length + 1}</strong>
+            <span>Category filters available</span>
+          </div>
+          <div className="hero-stat">
+            <strong>{filteredVideos.length}</strong>
+            <span>Items in the current feed</span>
+          </div>
+        </div>
       </header>
 
       <CategoryFilter
@@ -34,10 +53,23 @@ function Home() {
         onChange={setActiveCategory}
       />
 
-      {loading ? <div className="state-card">Loading videos...</div> : null}
-      {error ? <div className="state-card">Unable to load videos: {error}</div> : null}
+      {loading ? (
+        <div className="state-card">
+          <strong className="state-card-title">Loading the home feed</strong>
+          <p>Fetching videos from the local json-server backend.</p>
+        </div>
+      ) : null}
+      {error ? (
+        <div className="state-card">
+          <strong className="state-card-title">Unable to load videos</strong>
+          <p>{error}</p>
+        </div>
+      ) : null}
       {!loading && !error && filteredVideos.length === 0 ? (
-        <div className="state-card">No videos are available for this category.</div>
+        <div className="state-card">
+          <strong className="state-card-title">Nothing matches this category yet</strong>
+          <p>Choose another filter to explore the rest of the local catalog.</p>
+        </div>
       ) : null}
 
       {!loading && !error && filteredVideos.length > 0 ? (

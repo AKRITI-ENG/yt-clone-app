@@ -21,26 +21,46 @@ function Channel() {
   );
 
   if (channelLoading) {
-    return <div className="state-card">Loading channel...</div>;
+    return (
+      <div className="state-card">
+        <strong className="state-card-title">Loading channel</strong>
+        <p>Fetching creator details and uploaded videos.</p>
+      </div>
+    );
   }
 
   if (channelError || !channel) {
-    return <div className="state-card">Channel not found or failed to load.</div>;
+    return (
+      <div className="state-card">
+        <strong className="state-card-title">Channel unavailable</strong>
+        <p>{channelError || "Channel not found or failed to load."}</p>
+      </div>
+    );
   }
 
   return (
     <section className="content-stack">
       <ChannelHeader channel={channel} videoCount={sortedVideos.length} />
 
-      <header className="section-intro compact-intro">
-        <span className="section-kicker">Uploads</span>
-        <h2>Videos from this channel</h2>
-        <p>{videosLoading ? "Loading channel videos..." : "Browse the full upload list."}</p>
-      </header>
+      <div className="section-card">
+        <header className="section-intro compact-intro">
+          <span className="section-kicker">Uploads</span>
+          <h2>Videos from this channel</h2>
+          <p>{videosLoading ? "Loading channel videos..." : "Browse the full upload list sorted by recency."}</p>
+        </header>
+      </div>
 
-      {videosError ? <div className="state-card">Unable to load channel videos: {videosError}</div> : null}
+      {videosError ? (
+        <div className="state-card">
+          <strong className="state-card-title">Unable to load channel videos</strong>
+          <p>{videosError}</p>
+        </div>
+      ) : null}
       {!videosLoading && !videosError && sortedVideos.length === 0 ? (
-        <div className="state-card">This channel has no videos in the mock backend yet.</div>
+        <div className="state-card">
+          <strong className="state-card-title">No channel uploads yet</strong>
+          <p>This creator does not have videos in the mock backend right now.</p>
+        </div>
       ) : null}
 
       {!videosLoading && !videosError && sortedVideos.length > 0 ? (

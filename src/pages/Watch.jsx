@@ -42,11 +42,21 @@ function Watch() {
   }, [allVideos, video]);
 
   if (loading) {
-    return <div className="state-card">Loading video...</div>;
+    return (
+      <div className="state-card">
+        <strong className="state-card-title">Loading video</strong>
+        <p>Preparing the player, channel metadata, and related recommendations.</p>
+      </div>
+    );
   }
 
   if (error || !video) {
-    return <div className="state-card">Video not found or failed to load.</div>;
+    return (
+      <div className="state-card">
+        <strong className="state-card-title">Video unavailable</strong>
+        <p>{error || "Video not found or failed to load."}</p>
+      </div>
+    );
   }
 
   const liked = isLiked(video.id);
@@ -88,9 +98,12 @@ function Watch() {
       </div>
 
       <aside className="side-stack">
-        <div className="section-intro compact-intro">
-          <span className="section-kicker">Up Next</span>
-          <h2>Recommended videos</h2>
+        <div className="section-card">
+          <div className="section-intro compact-intro">
+            <span className="section-kicker">Up Next</span>
+            <h2>Recommended videos</h2>
+            <p>Suggestions stay close to the current topic or creator for a better watch flow.</p>
+          </div>
         </div>
 
         {relatedVideos.length > 0 ? (
@@ -100,7 +113,10 @@ function Watch() {
             ))}
           </div>
         ) : (
-          <div className="state-card">No related videos found.</div>
+          <div className="state-card">
+            <strong className="state-card-title">No related videos found</strong>
+            <p>This item does not have matching recommendations in the current dataset.</p>
+          </div>
         )}
       </aside>
     </section>

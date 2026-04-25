@@ -30,25 +30,64 @@ function Search() {
 
   return (
     <section className="content-stack">
-      <header className="section-intro">
-        <span className="section-kicker">Search</span>
-        <h1>{query ? `Results for "${query}"` : "Search the video catalog"}</h1>
-        <p>Search works against the local mock backend data.</p>
+      <header className="page-hero">
+        <div className="hero-top">
+          <div className="hero-copy">
+            <span className="section-kicker">Search</span>
+            <h1>{query ? `Results for "${query}"` : "Search the video catalog"}</h1>
+            <p>Search checks titles, descriptions, creators, and categories from the local mock backend.</p>
+          </div>
+        </div>
+
+        <div className="hero-stats">
+          <div className="hero-stat">
+            <strong>{query ? results.length : 0}</strong>
+            <span>Matching results</span>
+          </div>
+          <div className="hero-stat">
+            <strong>{videos.length}</strong>
+            <span>Total searchable videos</span>
+          </div>
+        </div>
       </header>
 
-      {!query ? <div className="state-card">Enter a search term from the navbar to see results.</div> : null}
-      {query && loading ? <div className="state-card">Searching videos...</div> : null}
-      {query && error ? <div className="state-card">Unable to search videos: {error}</div> : null}
-      {query && !loading && !error && results.length === 0 ? (
-        <div className="state-card">No results found for "{query}".</div>
-      ) : null}
-
-      {query && !loading && !error && results.length > 0 ? (
-        <div className="results-list">
-          {results.map((video) => (
-            <VideoCard key={video.id} video={video} compact />
-          ))}
+      {!query ? (
+        <div className="state-card">
+          <strong className="state-card-title">Start with a keyword</strong>
+          <p>Use the navbar search to look up videos by topic, creator, or category.</p>
         </div>
+      ) : null}
+      {query && loading ? (
+        <div className="state-card">
+          <strong className="state-card-title">Searching videos</strong>
+          <p>Filtering the current mock library for relevant matches.</p>
+        </div>
+      ) : null}
+      {query && error ? (
+        <div className="state-card">
+          <strong className="state-card-title">Unable to search videos</strong>
+          <p>{error}</p>
+        </div>
+      ) : null}
+      {query && !loading && !error && results.length === 0 ? (
+        <div className="state-card">
+          <strong className="state-card-title">No results found</strong>
+          <p>Try a broader keyword or a creator name instead of "{query}".</p>
+        </div>
+      ) : null}
+      {query && !loading && !error && results.length > 0 ? (
+        <>
+          <div className="results-toolbar">
+            <p className="results-count">
+              {results.length} result{results.length === 1 ? "" : "s"} found
+            </p>
+          </div>
+          <div className="results-list">
+            {results.map((video) => (
+              <VideoCard key={video.id} video={video} compact />
+            ))}
+          </div>
+        </>
       ) : null}
     </section>
   );
