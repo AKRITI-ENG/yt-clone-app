@@ -1,20 +1,21 @@
-import { createContext, useContext, useState, useEffect } from "react";
+/* eslint-disable react-refresh/only-export-components */
+import { createContext, useCallback, useContext, useEffect, useState } from "react";
 
 const AppContext = createContext();
+const readStoredList = (key) => {
+  try {
+    const saved = localStorage.getItem(key);
+    const parsed = saved ? JSON.parse(saved) : [];
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+};
 
 export const AppProvider = ({ children }) => {
-
   const [sidebarOpen, setSidebarOpen] = useState(true);
-
-  const [likedVideos, setLikedVideos] = useState(() => {
-    const saved = localStorage.getItem("likedVideos");
-    return saved ? JSON.parse(saved) : [];
-  });
-
-  const [watchHistory, setWatchHistory] = useState(() => {
-    const saved = localStorage.getItem("watchHistory");
-    return saved ? JSON.parse(saved) : [];
-  });
+  const [likedVideos, setLikedVideos] = useState(() => readStoredList("likedVideos"));
+  const [watchHistory, setWatchHistory] = useState(() => readStoredList("watchHistory"));
 
   useEffect(() => {
     localStorage.setItem("likedVideos", JSON.stringify(likedVideos));
@@ -24,35 +25,47 @@ export const AppProvider = ({ children }) => {
     localStorage.setItem("watchHistory", JSON.stringify(watchHistory));
   }, [watchHistory]);
 
-  const toggleSidebar = () => {
+  const toggleSidebar = useCallback(() => {
     setSidebarOpen((prev) => !prev);
-  };
+  }, []);
 
-  const toggleLike = (video) => {
+  const toggleLike = useCallback((video) => {
+    if (!video?.id) {
+      return;
+    }
+
     setLikedVideos((prev) => {
       const alreadyLiked = prev.find((v) => v.id === video.id);
       if (alreadyLiked) {
         return prev.filter((v) => v.id !== video.id);
-      } else {
-        return [video, ...prev];
       }
+
+      return [video, ...prev];
     });
-  };
+  }, []);
 
-  const isLiked = (videoId) => {
+  const isLiked = useCallback((videoId) => {
     return likedVideos.some((v) => v.id === videoId);
-  };
+  }, [likedVideos]);
 
-  const addToHistory = (video) => {
+  const addToHistory = useCallback((video) => {
+    if (!video?.id) {
+      return;
+    }
+
     setWatchHistory((prev) => {
+      if (prev[0]?.id === video.id) {
+        return prev;
+      }
+
       const filtered = prev.filter((v) => v.id !== video.id);
       return [video, ...filtered];
     });
-  };
+  }, []);
 
-  const clearHistory = () => {
+  const clearHistory = useCallback(() => {
     setWatchHistory([]);
-  };
+  }, []);
 
   return (
     <AppContext.Provider
