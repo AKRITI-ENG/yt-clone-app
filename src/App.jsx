@@ -7,6 +7,7 @@ import Search from "./pages/Search";
 import Channel from "./pages/Channel";
 import LikedVideos from "./pages/LikedVideos";
 import History from "./pages/History";
+import "./App.css";
 
 function NotFoundPage() {
   const location = useLocation();
